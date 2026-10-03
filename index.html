@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Check — Ваши глаза на объекте</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f3ece0;
+    --cream-dark: #e8dfd0;
+    --beige: #d9cbb6;
+    --gold: #b89b6a;
+    --gold-dark: #9c7f4f;
+    --brown: #4a3f30;
+    --brown-light: #6b5d4a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--brown);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 40px 20px;
+    background: radial-gradient(circle at 50% 30%, #faf5ec 0%, #f0e8db 60%, #e8dfd0 100%);
+  }
+  .seal {
+    width: 220px; height: 220px; border-radius: 50%;
+    background: linear-gradient(145deg, #f5eee0, #e3d7c3);
+    box-shadow: 0 20px 50px rgba(120,95,60,0.25),
+                inset 0 -8px 20px rgba(150,120,80,0.15),
+                inset 0 8px 20px rgba(255,255,255,0.8);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; margin-bottom: 45px;
+    animation: floatSeal 5s ease-in-out infinite;
+  }
+  .seal::before {
+    content: ''; position: absolute; inset: 14px;
+    border-radius: 50%; border: 2px solid rgba(184,155,106,0.35);
+  }
+  .seal-inner {
+    font-family: 'Cormorant Garamond', serif; font-weight: 700;
+    font-size: 5rem; color: var(--gold-dark);
+    letter-spacing: -4px; line-height: 1;
+    text-shadow: 1px 2px 3px rgba(255,255,255,0.7),
+                 -1px -1px 2px rgba(150,120,80,0.3);
+  }
+  @keyframes floatSeal {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    letter-spacing: 10px; color: var(--brown); margin-bottom: 10px;
+  }
+  .divider {
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 25px auto;
+  }
+  .slogan {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    color: var(--gold-dark); letter-spacing: 2px;
+  }
+  .hero-sub {
+    margin-top: 30px; font-weight: 300;
+    color: var(--brown-light);
+    max-width: 520px; font-size: 1rem;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 100px 20px; max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    text-align: center; color: var(--brown);
+    letter-spacing: 4px; margin-bottom: 15px;
+  }
+  .section-sub {
+    text-align: center; color: var(--gold-dark);
+    font-style: italic; font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; margin-bottom: 60px;
+  }
+
+  /* ---------- STEPS ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+  }
+  .step {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(184,155,106,0.25);
+    border-radius: 16px; padding: 35px 28px;
+    transition: all 0.4s ease;
+  }
+  .step:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(120,95,60,0.15);
+    border-color: rgba(184,155,106,0.5);
+  }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; color: var(--gold);
+    font-weight: 600; margin-bottom: 10px;
+  }
+  .step h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 8px; }
+  .step p { font-size: 0.92rem; color: var(--brown-light); font-weight: 300; }
+
+  /* ---------- WHOM ---------- */
+  .whom {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);
+    border-radius: 30px; padding: 70px 50px;
+    text-align: center;
+    border: 1px solid rgba(184,155,106,0.25);
+  }
+  .whom p {
+    max-width: 700px; margin: 0 auto 20px;
+    color: var(--brown-light); font-weight: 300; font-size: 1.05rem;
+  }
+  .whom .highlight {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; color: var(--gold-dark);
+    font-style: italic; display: block; margin-top: 30px;
+  }
+
+  /* ---------- CONTACTS ---------- */
+  .contacts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .contact-card {
+    display: block; text-decoration: none;
+    text-align: center; padding: 40px 25px;
+    background: linear-gradient(145deg, #faf5ec, #ede4d5);
+    border: 1px solid rgba(184,155,106,0.3);
+    border-radius: 20px;
+    color: var(--brown);
+    transition: all 0.35s ease;
+  }
+  .contact-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(120,95,60,0.18);
+    border-color: var(--gold-dark);
+  }
+  .contact-icon { font-size: 2.5rem; margin-bottom: 15px; }
+  .contact-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .contact-card p { color: var(--gold-dark); font-weight: 500; margin-bottom: 6px; }
+  .contact-card span { font-size: 0.85rem; color: var(--brown-light); font-weight: 300; }
+
+  /* ---------- FORM ---------- */
+  .form-wrap {
+    max-width: 600px; margin: 0 auto;
+    background: linear-gradient(145deg, #faf5ec, #ede4d5);
+    border-radius: 24px; padding: 55px 45px;
+    border: 1px solid rgba(184,155,106,0.3);
+    box-shadow: 0 20px 50px rgba(120,95,60,0.12);
+  }
+  .form-wrap h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; text-align: center;
+    margin-bottom: 10px; letter-spacing: 2px;
+  }
+  .form-wrap .form-note {
+    text-align: center; color: var(--brown-light);
+    font-size: 0.9rem; margin-bottom: 35px; font-weight: 300;
+  }
+  .field { margin-bottom: 20px; }
+  .field label {
+    display: block; font-size: 0.85rem;
+    color: var(--brown); margin-bottom: 8px;
+    font-weight: 500; letter-spacing: 0.5px;
+  }
+  .field input, .field textarea {
+    width: 100%; padding: 14px 16px;
+    font-family: 'Inter', sans-serif; font-size: 0.95rem;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(184,155,106,0.4);
+    border-radius: 10px; color: var(--brown);
+    transition: all 0.3s ease; resize: vertical;
+  }
+  .field input:focus, .field textarea:focus {
+    outline: none; border-color: var(--gold-dark);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(184,155,106,0.15);
+  }
+  .field textarea { min-height: 100px; }
+
+  .btn {
+    display: block; width: 100%;
+    padding: 16px; background: var(--gold-dark);
+    color: #fff; text-decoration: none;
+    border-radius: 50px; font-weight: 500;
+    letter-spacing: 1.5px; font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn:hover {
+    background: var(--brown); transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(74,63,48,0.3);
+  }
+
+  /* ---------- WHATSAPP FLOAT ---------- */
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px;
+    width: 62px; height: 62px; border-radius: 50%;
+    background: linear-gradient(145deg, #25D366, #128C7E);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(37,211,102,0.45);
+    z-index: 100; transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .wa-float:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 15px 40px rgba(37,211,102,0.6);
+  }
+  .wa-float svg { width: 32px; height: 32px; fill: #fff; }
+
+  /* ---------- PRICE ---------- */
+  .price-card {
+    text-align: center;
+    background: linear-gradient(145deg, #faf5ec, #ede4d5);
+    border-radius: 24px; padding: 60px 30px;
+    border: 1px solid rgba(184,155,106,0.3);
+    box-shadow: 0 20px 50px rgba(120,95,60,0.12);
+    max-width: 500px; margin: 0 auto;
+  }
+  .price-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; color: var(--gold-dark);
+    font-weight: 700; line-height: 1;
+  }
+  .price-tag small { font-size: 1.2rem; font-weight: 400; color: var(--brown-light); }
+  .price-card p { margin-top: 20px; color: var(--brown-light); font-weight: 300; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    text-align: center; padding: 50px 20px;
+    background: var(--brown); color: var(--cream);
+  }
+  footer .seal-mini {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(145deg, #f5eee0, #d9cbb6);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-weight: 700;
+    font-size: 1.5rem; color: var(--gold-dark); margin-bottom: 15px;
+  }
+  footer p { font-weight: 300; font-size: 0.9rem; opacity: 0.8; }
+  footer .slogan-foot {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    color: var(--beige); margin-top: 8px; font-size: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .whom { padding: 50px 25px; }
+    .form-wrap { padding: 40px 25px; }
+    section { padding: 70px 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="seal"><div class="seal-inner">PC</div></div>
+    <h1>PROPERTY CHECK</h1>
+    <div class="divider"></div>
+    <p class="slogan">ваши глаза на объекте</p>
+    <p class="hero-sub">
+      Вы не можете приехать на просмотр? Мы приедем вместо вас и покажем
+      реальное состояние квартиры или дома — честно, подробно, на фото и видео.
+    </p>
+  </header>
+
+  <!-- КАК ЭТО РАБОТАЕТ -->
+  <section>
+    <h2 class="section-title">Как это работает</h2>
+    <p class="section-sub">шесть простых шагов</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><h3>Вы отправляете ссылку</h3><p>Присылаете объявление с Avito, ЦИАН или другого сайта.</p></div>
+      <div class="step"><div class="step-num">02</div><h3>Мы приезжаем на объект</h3><p>В назначенное время наш специалист будет на месте.</p></div>
+      <div class="step"><div class="step-num">03</div><h3>Подробные фото</h3><p>Фиксируем все зоны: комнаты, кухню, санузел, подъезд, двор.</p></div>
+      <div class="step"><div class="step-num">04</div><h3>Видеосъёмка</h3><p>Снимаем квартиру целиком — вы увидите её своими глазами.</p></div>
+      <div class="step"><div class="step-num">05</div><h3>Осмотр по чек-листу</h3><p>Визуально проверяем ключевые зоны и отмечаем нюансы.</p></div>
+      <div class="step"><div class="step-num">06</div><h3>Отчёт для вас</h3><p>Фото + видео + структурированное заключение в удобном виде.</p></div>
+    </div>
+  </section>
+
+  <!-- ДЛЯ КОГО -->
+  <section>
+    <div class="whom">
+      <h2 class="section-title">Для кого это</h2>
+      <p>Вы живёте в Москве, а хотите купить квартиру в Новосибирске. Вам понравился объект на Avito, но лететь ради одного просмотра — долго и дорого.</p>
+      <p>Вы заказываете проверку — мы едем на место, показываем всё как есть, и вы спокойно решаете: стоит ли ехать лично на следующий этап.</p>
+      <span class="highlight">«Я не могу приехать — мои глаза на объекте — вы»</span>
+    </div>
+  </section>
+
+  <!-- ЦЕНА -->
+  <section>
+    <h2 class="section-title">Стоимость</h2>
+    <p class="section-sub">прозрачно и без скрытых доплат</p>
+    <div class="price-card">
+      <div class="price-tag">2 990 ₽ <small>от</small></div>
+      <p>Полный отчёт: фото, видео и структурированное заключение по объекту.</p>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section id="contact">
+    <h2 class="section-title">Связаться с нами</h2>
+    <p class="section-sub">выберите удобный способ</p>
+    <div class="contacts">
+      <a href="tel:+79139828883" class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h3>Позвонить</h3>
+        <p>+7 913 982-88-83</p>
+        <span>Ответим сразу</span>
+      </a>
+      <a href="https://wa.me/79139828883?text=Здравствуйте!%20Хочу%20заказать%20проверку%20объекта." 
+         target="_blank" class="contact-card">
+        <div class="contact-icon">💬</div>
+        <h3>WhatsApp</h3>
+        <p>Написать в чат</p>
+        <span>Отвечаем за 15 минут</span>
+      </a>
+      <a href="https://t.me/+79139828883" target="_blank" class="contact-card">
+        <div class="contact-icon">✈️</div>
+        <h3>Telegram</h3>
+        <p>Написать в чат</p>
+        <span>Удобно с телефона</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ФОРМА ЗАЯВКИ -->
+  <section id="form">
+    <h2 class="section-title">Оставить заявку</h2>
+    <p class="section-sub">откроется WhatsApp с готовым сообщением</p>
+    <div class="form-wrap">
+      <h3>Проверим объект для вас</h3>
+      <p class="form-note">Заполните поля — мы свяжемся с вами</p>
+
+      <form id="waForm">
+        <div class="field">
+          <label for="name">Ваше имя</label>
+          <input type="text" id="name" placeholder="Иван" required>
+        </div>
+        <div class="field">
+          <label for="link">Ссылка на объект</label>
+          <input type="url" id="link" placeholder="https://www.avito.ru/..." required>
+        </div>
+        <div class="field">
+          <label for="comment">Комментарий (необязательно)</label>
+          <textarea id="comment" placeholder="Город, адрес, удобное время просмотра..."></textarea>
+        </div>
+        <button type="submit" class="btn">Отправить в WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- WHATSAPP ПЛАВАЮЩАЯ КНОПКА -->
+  <a href="https://wa.me/79139828883?text=Здравствуйте!%20Хочу%20заказать%20проверку%20объекта." 
+     target="_blank" class="wa-float" aria-label="Написать в WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="seal-mini">PC</div>
+    <p>PROPERTY CHECK</p>
+    <p class="slogan-foot">ваши глаза на объекте</p>
+  </footer>
+
+<script>
+  // Номер телефона в формате для WhatsApp (без +, пробелов и скобок)
+  const PHONE = '79139828883';
+
+  document.getElementById('waForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name    = document.getElementById('name').value.trim();
+    const link    = document.getElementById('link').value.trim();
+    const comment = document.getElementById('comment').value.trim();
+
+    const text =
+      '🏠 Новая заявка — PROPERTY CHECK\n\n' +
+      '👤 Имя: ' + name + '\n' +
+      '🔗 Объект: ' + link + '\n' +
+      '💬 Комментарий: ' + (comment || '—');
+
+    const url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(text);
+    window.open(url, '_blank');
+  });
+</script>
+
+</body>
+</html>
